@@ -6,7 +6,7 @@ const app = express();
 
 
 app.get('/weather', (req,res)=>{
-    res.json({message: 'Hello from server!'})
+    res.json({ express: req.query.city})
 })
 
 app.listen(PORT, () => {
