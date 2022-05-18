@@ -1,31 +1,40 @@
 'use strict';
-
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const cors = require('cors');
+app.use(cors());
+const PORT = process.env.PORT || 5000;
 let data = require('./data/weather.json');
 
-// this library lets us access our .env file
-require('dotenv').config();
+class Forecast {
 
-// express is a server library
-const express = require('express');
+    constructor(date,description) {
+        this.date = date;
+        this.description = description;
+    };
+};
 
-// initalizes the express library
-const app = express();
 
-// library that determines who is allowed to speak to our server
-const cors = require('cors');
 
-// this settting says that everyone is allowed to speak to our server
-app.use(cors());
+function getWeather() {
+    let date = [];
+    let description = [];
 
-// we are getting the port variable from the .env file.
-const PORT = process.env.PORT;
+    data.find()
+
+
+
+}
+
 
 app.get('/weather', (request, response) => {
-	console.log({ data: request.query.city});
+    response.send({ express: request.query.city });
+	// console.log({ data: request.query.city});
 	console.log({ express: request.query.city });
-	response.send({ express: request.query.city });
 });
 
+//Fallback
 app.get('/', (request, response) => {
     response.send({express: request.query.city})
 });
