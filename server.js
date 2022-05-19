@@ -23,7 +23,7 @@ function handleWeather(request, response){
         const weatherArray = cityWeather.data.map(day => new Forecast(day));
 
 
-        response.status(200).send([weatherArray]);
+        response.status(200).send(weatherArray);
 
 };
 
