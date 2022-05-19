@@ -1,12 +1,32 @@
 'use strict';
-require('dotenv').config();
-const express = require('express');
-const app = express();
-const cors = require('cors');
-app.use(cors());
+// require('dotenv').config();
+// const express = require('express');
+// const app = express();
+// const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import Axios from 'axios';
+// app.use(cors());
 const PORT = process.env.PORT || 5001;
-let weatherData = require('./data/weather.json');
-import axios from 'axios';
+const weatherKey = process.env.WEATHER_API_KEY;
+// const axios = require('axios').default;
+
+Axios({
+    method: 'get',
+    url: 'http://api.weatherbit.io/v2.0/forecast/daily',
+    params: {
+        city: 'Cedar Rapids',
+        key: weatherKey,
+    }
+        .then((response) => {
+            console.log(response.data)
+        }).catch((err) => {
+            console.error('whoops', err);
+        }),
+});
+
+
 
 app.get('/weather', handleWeather);
 
