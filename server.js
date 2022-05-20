@@ -15,6 +15,11 @@ console.log(weatherKey);
 
 app.get('/weather', handleWeather);
 
+function formatData() {
+
+    
+};
+
 function handleWeather(request, response) {
     console.log('server side ', request.query);
     let cityQuery = request.query.city
@@ -29,7 +34,20 @@ function handleWeather(request, response) {
             lat: latQuery,
             lon: lonQuery,
             key: weatherKey,
-        }})
+        },
+        transformResponse: [function (data) {
+            console.log('this is our data',  JSON.parse(data));
+            let betterData = JSON.parse(data);
+            let weatherArray = [];
+            for(let i = 0; i < betterData.length; i++) {
+                let description = betterData.weather.description;
+                let dateTime = betterData.datetime;
+                weatherArray.push({description: description, datetime: dateTime});
+            };
+            return weatherArray;
+
+        }],
+    })
             .then((response) => {
                 console.log(response.data);
             })
