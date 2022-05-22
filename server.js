@@ -6,14 +6,29 @@ const cors = require('cors');
 app.use(cors());
 const PORT = process.env.PORT || 5001;
 const weatherKey = process.env.WEATHER_API_KEY;
+const movieKey = process.env.MOVIE_API_KEY;
 const axios = require('axios').default;
 
 console.log(PORT);
 console.log(weatherKey);
 
 app.get('/weather', handleWeather);
+app.get('/movies', handleMovie);
 
-function formatData() {}
+function handleMovie(request, response) {
+    let movieQuery = request.query.year;
+    console.log('beginning movie query');
+	axios({
+		method: 'get',
+		url: `https://api.themoviedb.org/3/discover/movie?api_key=${movieKey}&language=en-US&sort_by=popularity.desc&page=1&primary_release_year=${movieQuery}`,
+	})
+		.then((res) => {
+			console.log(response.data);
+		})
+		.catch((err) => {
+			console.error(err);
+		});
+}
 
 function handleWeather(request, response) {
 	console.log('server side ', request.query);
@@ -36,7 +51,7 @@ function handleWeather(request, response) {
 			function (data) {
 				// console.log('this is our data',  JSON.parse(data));
 				let betterData = JSON.parse(data);
-    				let weatherArray = [];
+				let weatherArray = [];
 				for (let i = 0; i < betterData.data.length; i++) {
 					let description = betterData.data[i].weather.description;
 					let dateTime = betterData.data[i].datetime;
@@ -53,17 +68,6 @@ function handleWeather(request, response) {
 		.catch((err) => {
 			console.error(err);
 		});
-
-	// //get weather data
-	// const cityWeather = weatherData.find(
-	//     (city) => city.city_name.toLowerCase() === searchQuery.toLowerCase()
-	// );
-	// console.log('cityWeather', cityWeather.data);
-
-	// //loop over weather data call constructor for building object from data.
-	// const weatherArray = cityWeather.data.map((day) => new Forecast(day));
-
-	// response.status(200).send(weatherArray);
 }
 
 // class Forecast {
