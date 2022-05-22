@@ -9,8 +9,9 @@ const weatherKey = process.env.WEATHER_API_KEY;
 const movieKey = process.env.MOVIE_API_KEY;
 const axios = require('axios').default;
 
-console.log(PORT);
-console.log(weatherKey);
+console.log('this is the port #', PORT);
+console.log('this is the weather key', weatherKey);
+console.log('this is the movie key', movieKey);
 
 app.get('/weather', handleWeather);
 app.get('/movies', handleMovie);
@@ -21,9 +22,28 @@ function handleMovie(request, response) {
 	axios({
 		method: 'get',
 		url: `https://api.themoviedb.org/3/discover/movie?api_key=${movieKey}&language=en-US&sort_by=popularity.desc&page=1&primary_release_year=${movieQuery}`,
+		transformResponse: [
+			function (data) {
+				console.log('this is the first data object', data.title);
+				let movieArray = [];
+				for (let i = 0; i < data.length; i++) {
+					let title = data[i].title;
+					let overview = data[i].overview;
+					let release_date = data[i].release_date;
+					let backdrop = data[i].backdrop_path;
+					let image = data[i].poster_path;
+					
+					movieArray.push({title: title, overview: overview, release_date: release_date, backdrop_path: backdrop, image_path: image});
+					
+				}
+					// console.log(movieArray);
+					return movieArray;
+			}
+		]
 	})
 		.then((res) => {
-			console.log(response.data);
+			// console.log(response.data);
+			// response.send(res.data);
 		})
 		.catch((err) => {
 			console.error(err);
