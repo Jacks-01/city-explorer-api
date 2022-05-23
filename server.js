@@ -24,14 +24,15 @@ function handleMovie(request, response) {
 		url: `https://api.themoviedb.org/3/discover/movie?api_key=${movieKey}&language=en-US&sort_by=popularity.desc&page=1&primary_release_year=${movieQuery}`,
 		transformResponse: [
 			function (data) {
-				console.log('this is the first data object', data.title);
+				// console.log('this is the first data object', JSON.parse(data));
+				let movieData = JSON.parse(data).results;
 				let movieArray = [];
-				for (let i = 0; i < data.length; i++) {
-					let title = data[i].title;
-					let overview = data[i].overview;
-					let release_date = data[i].release_date;
-					let backdrop = data[i].backdrop_path;
-					let image = data[i].poster_path;
+				for (let i = 0; i < movieData.length; i++) {
+					let title = movieData[i].title;
+					let overview = movieData[i].overview;
+					let release_date = movieData[i].release_date;
+					let backdrop = movieData[i].backdrop_path;
+					let image = movieData[i].poster_path;
 					
 					movieArray.push({title: title, overview: overview, release_date: release_date, backdrop_path: backdrop, image_path: image});
 					
@@ -42,8 +43,8 @@ function handleMovie(request, response) {
 		]
 	})
 		.then((res) => {
-			// console.log(response.data);
-			// response.send(res.data);
+			console.log('logging response data before sending', res.data);
+			response.send(res.data);
 		})
 		.catch((err) => {
 			console.error(err);
