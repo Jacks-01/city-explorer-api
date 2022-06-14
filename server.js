@@ -37,7 +37,6 @@ function handleMovie(request, response) {
 					movieArray.push({title: title, overview: overview, release_date: release_date, backdrop_path: backdrop, image_path: image});
 					
 				}
-					// console.log(movieArray);
 					return movieArray;
 			}
 		]
@@ -73,7 +72,7 @@ function handleWeather(request, response) {
 				// console.log('this is our data',  JSON.parse(data));
 				let betterData = JSON.parse(data);
 				let weatherArray = [];
-				for (let i = 0; i < betterData.data.length; i++) {
+				for (let i = 0; i < 3; i++) {
 					let description = betterData.data[i].weather.description;
 					let dateTime = betterData.data[i].datetime;
 					weatherArray.push({ description: description, datetime: dateTime });
