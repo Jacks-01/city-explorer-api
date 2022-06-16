@@ -2,6 +2,8 @@
 
 const Weather = {};
 const weatherKey = process.env.WEATHER_API_KEY;
+const axios = require('axios').default;
+
 
 Weather.getForecast = async (request, response) => {
     
