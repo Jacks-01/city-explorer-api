@@ -90,15 +90,6 @@ function handleWeather(request, response) {
 		});
 }
 
-// class Forecast {
-// 	constructor(day) {
-// 		console.log('day constructor', day.datetime);
-// 		console.log('description constructor', day.weather.description);
-// 		this.date = day.datetime;
-// 		this.description = day.weather.description;
-// 	}
-// }
-
 app.listen(PORT, () => {
 	console.log(`Server listening on ${PORT}`);
 });
