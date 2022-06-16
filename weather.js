@@ -30,8 +30,9 @@ Weather.getForecast = async (request, response) => {
                     let weatherArray = [];
                     for (let i = 0; i < 3; i++) {
                         let description = betterData.data[i].weather.description;
+                        let icon = betterData.data[i].weather.icon;
                         let dateTime = betterData.data[i].datetime;
-                        weatherArray.push({ description: description, datetime: dateTime });
+                        weatherArray.push({ description: description, datetime: dateTime, icon: icon });
                     }
                     return weatherArray;
                 },
