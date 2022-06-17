@@ -6,8 +6,8 @@ const cors = require('cors');
 app.use(cors());
 const PORT = process.env.PORT || 5001;
 const axios = require('axios').default;
-const Weather = require('./weather');
-const Movies = require('./movies');
+const Weather = require('./modules/weather');
+const Movies = require('./modules/movies');
 
 app.get('/weather', Weather.getForecast);
 app.get('/movies', Movies.getMovies);
