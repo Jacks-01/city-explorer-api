@@ -23,26 +23,27 @@ const myCache = new NodeCache({ stdTTL: 0 });
 // };
 
 Weather.getForecast = async (request, response) => {
+    // First, we are logging all keys that are in our cache
+    // Second, we are defining the key, which is equal to our city name (request.query.city)
+    // Third, IF the key is in the cache, return it. Otherwise make the API request.
 	try {
 		let myKeys = myCache.keys();
 		console.log(myKeys);
-
 
 		let key = request.query.city;
 		console.log('this is our key inside of verifyCache', key);
 
 		if (myCache.has(key)) {
-            let value = myCache.get(key);
-            console.log(`data we are sending back if query is in cache ${JSON.stringify(value)}`)
+			let value = myCache.get(key);
+			console.log(
+				`data we are sending back if query is in cache ${JSON.stringify(value)}`
+			);
 			return response.status(200).json(value);
 		}
 		console.log('server side ', request.query);
 		let cityQuery = request.query.city;
 		let lonQuery = request.query.lon;
 		let latQuery = request.query.lat;
-
-		// console.log('this is cityQuery:', typeof cityQuery);
-		// let key = cityQuery;
 
 		console.log(
 			`server has recieved the following parameters: ${cityQuery} + ${lonQuery} + ${latQuery}`
@@ -74,9 +75,9 @@ Weather.getForecast = async (request, response) => {
 
 						myCache.set(key, weatherArray);
 					}
-                    
-                    let value = myCache.get(key);
-                    console.log(`values of current key: ${Object.entries(value)}`);
+
+					let value = myCache.get(key);
+					console.log(`values of current key: ${Object.entries(value)}`);
 					// let myKeys = myCache.keys();
 					// console.log('these are the keys', myKeys);
 					return weatherArray;
