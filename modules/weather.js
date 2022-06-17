@@ -4,7 +4,7 @@ const Weather = {};
 const weatherKey = process.env.WEATHER_API_KEY;
 const axios = require('axios').default;
 const NodeCache = require('node-cache');
-const myCache = new NodeCache({ stdTTL: 0 });
+const myCache = new NodeCache({ stdTTL: 50000 });
 
 // const verifyCache = (req, res, next) => {
 // 	try {
@@ -23,15 +23,15 @@ const myCache = new NodeCache({ stdTTL: 0 });
 // };
 
 Weather.getForecast = async (request, response) => {
-    // First, we are logging all keys that are in our cache
-    // Second, we are defining the key, which is equal to our city name (request.query.city)
-    // Third, IF the key is in the cache, return it. Otherwise make the API request.
+	// First, we are logging all keys that are in our cache
+	// Second, we are defining the key, which is equal to our city name (request.query.city)
+	// Third, IF the key is in the cache, return it. Otherwise make the API request.
 	try {
-		let myKeys = myCache.keys();
-		console.log(myKeys);
+		// let myKeys = myCache.keys();
+		// console.log(myKeys);
 
 		let key = request.query.city;
-		console.log('this is our key inside of verifyCache', key);
+		// console.log('this is our key inside of verifyCache', key);
 
 		if (myCache.has(key)) {
 			let value = myCache.get(key);
@@ -73,13 +73,13 @@ Weather.getForecast = async (request, response) => {
 							icon: icon,
 						});
 
-						myCache.set(key, weatherArray);
 					}
-
-					let value = myCache.get(key);
-					console.log(`values of current key: ${Object.entries(value)}`);
+                    
+					// let value = myCache.get(key);
+					// console.log(`values of current key: ${Object.entries(value)}`);
 					// let myKeys = myCache.keys();
 					// console.log('these are the keys', myKeys);
+                    myCache.set(key, weatherArray);
 					return weatherArray;
 				},
 			],
