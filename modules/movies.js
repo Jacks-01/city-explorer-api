@@ -31,7 +31,7 @@ Movies.getMovies = async (request, response) => {
 		]
 	})
 		.then((res) => {
-			console.log('logging response data before sending', res.data);
+			// console.log('logging response data before sending', res.data);
 			response.send(res.data);
 		})
 		.catch((err) => {
